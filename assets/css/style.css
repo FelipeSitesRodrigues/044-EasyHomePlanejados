@@ -464,7 +464,9 @@ section{padding-block:clamp(56px,7vw,92px)}
 }
 .acab-in{position:relative;z-index:2;padding-block:clamp(52px,7vw,84px);width:100%}
 .acab-copy{max-width:440px}
-.acab-copy p{color:#C1D2E5;margin:16px 0 26px;font-size:1rem}
+.acab-copy p{color:#C1D2E5;margin:16px 0 0;font-size:1rem}
+.acab-copy p+p{margin-top:12px}
+.acab-copy .btn{margin-top:26px}
 .acab-names{
   list-style:none;display:flex;flex-wrap:wrap;gap:8px 10px;margin:30px 0 0;padding:0;max-width:520px;
 }
