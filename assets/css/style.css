@@ -748,8 +748,21 @@ section{padding-block:clamp(56px,7vw,92px)}
 }
 .ft-col a,.ft-col p{display:block;color:#B6C7DA;text-decoration:none;font-size:.9rem;padding-block:4px;transition:color .18s}
 .ft-col a:hover{color:#fff}
-.ft-cont a{font-weight:700;color:#fff;font-size:1rem;margin-bottom:10px}
-.ft-cont a span{display:block;font-weight:500;font-size:.78rem;color:#8CA2BB}
+.ft-lnk{
+  display:flex!important;align-items:center;gap:11px;
+  padding:9px 0!important;text-decoration:none;
+}
+.ft-ico{
+  width:32px;height:32px;flex:none;padding:7px;border-radius:9px;
+  fill:none;stroke:var(--blue-glow);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+  background:rgba(124,196,255,.1);border:1px solid rgba(124,196,255,.2);
+  transition:background-color .2s,border-color .2s,stroke .2s;
+}
+.ft-ico-wa{fill:var(--blue-glow);stroke:none;padding:6px}
+.ft-lnk:hover .ft-ico{background:rgba(124,196,255,.2);border-color:rgba(124,196,255,.45)}
+.ft-lnk span{display:flex;flex-direction:column;line-height:1.25}
+.ft-lnk b{font-weight:700;color:#fff;font-size:.95rem}
+.ft-lnk i{font-style:normal;font-weight:500;font-size:.76rem;color:#8CA2BB}
 .ft-reg{color:#8CA2BB!important;font-size:.84rem!important;margin-top:12px;max-width:26ch}
 .ft-end{
   display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
