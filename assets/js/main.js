@@ -93,9 +93,15 @@
   var answers = { 1: '', 2: '', 3: '', 4: '', 5: '' };
   var LABELS = { 1: 'Ambiente', 2: 'Prazo', 3: 'Investimento', 4: 'Imóvel', 5: 'Medidas' };
 
+  var visorQ = document.getElementById('calcQ');
+  var fita = document.getElementById('calcFita');
+
   function paint() {
+    var atual = null;
     Array.prototype.forEach.call(qs, function (q) {
-      q.classList.toggle('is-on', Number(q.dataset.q) === step);
+      var on = Number(q.dataset.q) === step;
+      q.classList.toggle('is-on', on);
+      if (on) atual = q;
     });
     var pct = Math.round((step / TOTAL) * 100);
     if (bar) bar.style.width = pct + '%';
@@ -103,6 +109,17 @@
     if (back) back.hidden = step === 1;
     if (nextTx) nextTx.textContent = step === TOTAL ? 'Ver minha proposta' : 'Continuar';
     if (nextBtn) nextBtn.classList.toggle('is-wa', step === TOTAL);
+    if (visorQ && atual) visorQ.textContent = atual.dataset.pergunta || '';
+
+    /* a fita do visor: o que já foi digitado, como o papel de uma calculadora */
+    if (fita) {
+      var html = '';
+      for (var i = 1; i <= 5; i++) {
+        if (answers[i]) html += '<li><span>' + LABELS[i] + '</span><b>' + answers[i] + '</b></li>';
+      }
+      fita.innerHTML = html;
+    }
+
     Array.prototype.forEach.call(stepsUi, function (li) {
       var n = Number(li.dataset.step);
       li.classList.toggle('is-on', n === step);
@@ -140,19 +157,33 @@
     if (el) el.hidden = true;
   }
 
-  /* seleção de chip */
+  /* seleção de tecla */
   Array.prototype.forEach.call(qs, function (q) {
     var n = Number(q.dataset.q);
     if (n > 5) return;
     q.addEventListener('click', function (e) {
-      var chip = e.target.closest('.chip');
-      if (!chip) return;
-      Array.prototype.forEach.call(q.querySelectorAll('.chip'), function (c) { c.classList.remove('is-sel'); });
-      chip.classList.add('is-sel');
-      answers[n] = chip.dataset.v;
+      var tecla = e.target.closest('.key');
+      if (!tecla) return;
+      Array.prototype.forEach.call(q.querySelectorAll('.key'), function (c) { c.classList.remove('is-sel'); });
+      tecla.classList.add('is-sel');
+      answers[n] = tecla.dataset.v;
       clearWarn(q);
+      if (fita) paint();
       if (reduce) { go(n + 1); }
-      else { setTimeout(function () { if (step === n) go(n + 1); }, 240); }
+      else { setTimeout(function () { if (step === n) go(n + 1); }, 260); }
+    });
+  });
+
+  /* abas da calculadora */
+  var tabs = document.querySelectorAll('.calc-tab');
+  Array.prototype.forEach.call(tabs, function (tab) {
+    tab.addEventListener('click', function () {
+      Array.prototype.forEach.call(tabs, function (t) {
+        var on = t === tab;
+        t.classList.toggle('is-on', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
     });
   });
 
@@ -206,25 +237,23 @@
   });
 
   /* abrir simulador a partir de qualquer CTA */
+  function marcar(nq, valor) {
+    var fs = form.querySelector('[data-q="' + nq + '"]');
+    var alvo = fs && fs.querySelector('.key[data-v="' + valor + '"]');
+    if (!alvo) return;
+    Array.prototype.forEach.call(fs.querySelectorAll('.key'), function (c) { c.classList.remove('is-sel'); });
+    alvo.classList.add('is-sel');
+    answers[nq] = valor;
+  }
+
   function openSim(amb, faixa) {
-    if (amb) {
-      var q1 = form.querySelector('[data-q="1"]');
-      var c1 = q1.querySelector('.chip[data-v="' + amb + '"]');
-      if (c1) {
-        Array.prototype.forEach.call(q1.querySelectorAll('.chip'), function (c) { c.classList.remove('is-sel'); });
-        c1.classList.add('is-sel');
-        answers[1] = amb;
-      }
-    }
-    if (faixa) {
-      var q3 = form.querySelector('[data-q="3"]');
-      var c3 = q3.querySelector('.chip[data-v="' + faixa + '"]');
-      if (c3) {
-        Array.prototype.forEach.call(q3.querySelectorAll('.chip'), function (c) { c.classList.remove('is-sel'); });
-        c3.classList.add('is-sel');
-        answers[3] = faixa;
-      }
-    }
+    if (amb) marcar(1, amb);
+    if (faixa) marcar(3, faixa);
+
+    /* se o visitante veio de outra aba, volta pra calculadora */
+    var tabSim = document.getElementById('tabSim');
+    if (tabSim && !tabSim.classList.contains('is-on')) tabSim.click();
+
     go(amb ? 2 : 1);
     document.getElementById('simulador').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   }
