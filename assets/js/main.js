@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var WA = '5511916158115';
+  var WA = '5511969138289';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- ano ---------- */
