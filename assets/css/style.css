@@ -575,7 +575,8 @@ section{padding-block:clamp(56px,7vw,92px)}
 }
 .calc-tabs{display:flex;gap:8px;margin-bottom:12px;position:relative;z-index:2}
 .calc-tab{
-  flex:1;padding:13px 10px;border-radius:13px;font-size:.86rem;font-weight:700;
+  flex:1 1 0;min-width:0;padding:13px 10px;border-radius:13px;font-size:.86rem;font-weight:700;
+  line-height:1.2;
   background:rgba(255,255,255,.04);color:#9FB6CE;
   border:1px solid rgba(124,196,255,.16);
   transition:background-color .2s,color .2s,border-color .2s;
@@ -691,6 +692,43 @@ section{padding-block:clamp(56px,7vw,92px)}
 .lgpd{display:flex;gap:10px;align-items:flex-start;font-size:.83rem;color:#93AAC2;line-height:1.5;margin-top:2px}
 .lgpd input{width:18px;height:18px;flex:none;margin-top:2px;accent-color:var(--blue-lit)}
 .sim-micro{font-size:.76rem;color:#6E8AA6;text-align:center;margin-top:12px}
+
+/* aba de medidas */
+.med-visor{padding-bottom:14px}
+.med-lb{
+  font-family:"Space Grotesk",sans-serif;font-size:.64rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#3D7A93;margin-top:12px;
+}
+.med-total{
+  font-family:Sora,sans-serif;font-weight:800;font-size:clamp(2rem,4.6vw,2.9rem);
+  letter-spacing:-.035em;line-height:1.05;color:#DDFAFF;margin-top:2px;
+  text-shadow:0 0 20px rgba(124,232,255,.5);
+}
+.med-lista{list-style:none;margin:12px 0 0;padding:0}
+.med-lista li{
+  display:flex;align-items:center;gap:10px;padding:5px 0;
+  font-family:"Space Grotesk",sans-serif;font-size:.7rem;color:#4E90AC;
+  border-top:1px dashed rgba(124,232,255,.16);
+}
+.med-lista .med-nome{flex:1;color:#A6EDFF;font-weight:700}
+.med-lista .med-med{color:#4E90AC;white-space:nowrap}
+.med-lista .med-sub{color:#DDFAFF;font-weight:700;white-space:nowrap}
+.med-lista button{
+  flex:none;width:22px;height:22px;border-radius:6px;line-height:1;
+  background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.35);
+  color:#FF9E9E;font-size:1rem;padding:0;
+  transition:background-color .18s,color .18s;
+}
+.med-lista button:hover{background:rgba(255,107,107,.28);color:#fff}
+.med-titulo{
+  font-family:"Space Grotesk",sans-serif;font-size:.66rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:#7FA0C0;
+  margin:16px 0 9px;
+}
+.med-campos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.med-campos .fld{margin-bottom:0;min-width:0}
+.med-campos input{min-width:0}
+.med-wa{margin-top:9px;animation:qin .3s var(--ease) both}
 
 /* aba do PDF */
 .pdf-box{text-align:center;padding:26px 22px 24px}
@@ -872,7 +910,12 @@ section{padding-block:clamp(56px,7vw,92px)}
   .sim-grid{grid-template-columns:1fr;gap:26px}
   .sim-steps{display:none}
   .calc{padding:11px;border-radius:20px}
-  .calc-tab{font-size:.8rem;padding:12px 8px}
+  .calc-tabs{gap:5px}
+  .calc-tab{font-size:.72rem;padding:11px 5px;border-radius:11px}
+  .med-campos{gap:7px}
+  .med-campos label{font-size:.76rem}
+  .med-campos input{padding:12px 10px;font-size:.9rem}
+  .med-lista li{font-size:.66rem;gap:7px}
   .keys-3{grid-template-columns:repeat(2,1fr)}
   .key{min-height:58px}
   .key span{font-size:.82rem}

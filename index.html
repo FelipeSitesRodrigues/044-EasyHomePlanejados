@@ -403,8 +403,9 @@
 
     <div class="calc" id="simCard">
       <div class="calc-tabs" role="tablist">
-        <button class="calc-tab is-on" id="tabSim" role="tab" aria-selected="true" aria-controls="panelSim" data-tab="sim">Simular meu projeto</button>
-        <button class="calc-tab" id="tabPdf" role="tab" aria-selected="false" aria-controls="panelPdf" data-tab="pdf">Já tenho meu projeto</button>
+        <button class="calc-tab is-on" id="tabSim" role="tab" aria-selected="true" aria-controls="panelSim" data-tab="sim">Simular projeto</button>
+        <button class="calc-tab" id="tabMed" role="tab" aria-selected="false" aria-controls="panelMed" data-tab="med">Calcular medidas</button>
+        <button class="calc-tab" id="tabPdf" role="tab" aria-selected="false" aria-controls="panelPdf" data-tab="pdf">Já tenho projeto</button>
       </div>
 
       <div class="calc-panel" id="panelSim" role="tabpanel" aria-labelledby="tabSim">
@@ -506,6 +507,59 @@
           </div>
           <p class="sim-micro">Seus dados ficam só com a Easy Home. Sem spam, sem compartilhamento.</p>
         </form>
+      </div>
+
+      <div class="calc-panel" id="panelMed" role="tabpanel" aria-labelledby="tabMed" hidden>
+        <div class="calc-visor med-visor">
+          <div class="calc-visor-top">
+            <span class="calc-marca">Easy Home <i>calc</i></span>
+            <span class="calc-passo" id="medQtd">Nenhum ambiente</span>
+          </div>
+          <p class="med-lb">Estimativa do seu projeto</p>
+          <p class="med-total" id="medTotal">R$ 0</p>
+          <ul class="med-lista" id="medLista"></ul>
+        </div>
+
+        <p class="med-titulo">1. Escolha o ambiente</p>
+        <div class="keys keys-3" id="medAmbientes">
+          <button type="button" class="key" data-v="Cozinha"><i>01</i><span>Cozinha</span></button>
+          <button type="button" class="key" data-v="Dormitório"><i>02</i><span>Dormitório</span></button>
+          <button type="button" class="key" data-v="Closet"><i>03</i><span>Closet</span></button>
+          <button type="button" class="key" data-v="Sala"><i>04</i><span>Sala</span></button>
+          <button type="button" class="key" data-v="Home office"><i>05</i><span>Home office</span></button>
+          <button type="button" class="key" data-v="Lavanderia"><i>06</i><span>Lavanderia</span></button>
+          <button type="button" class="key" data-v="Área gourmet"><i>07</i><span>Área gourmet</span></button>
+          <button type="button" class="key" data-v="Home theater"><i>08</i><span>Home theater</span></button>
+          <button type="button" class="key" data-v="Banheiro"><i>09</i><span>Banheiro</span></button>
+        </div>
+
+        <p class="med-titulo">2. Medidas do móvel</p>
+        <div class="med-campos">
+          <div class="fld">
+            <label for="medA">Altura <i>(m)</i></label>
+            <input type="text" id="medA" inputmode="decimal" placeholder="2,50" autocomplete="off">
+          </div>
+          <div class="fld">
+            <label for="medL">Largura <i>(m)</i></label>
+            <input type="text" id="medL" inputmode="decimal" placeholder="3,00" autocomplete="off">
+          </div>
+          <div class="fld">
+            <label for="medP">Profundidade <i>(m)</i></label>
+            <input type="text" id="medP" inputmode="decimal" placeholder="0,60" autocomplete="off">
+          </div>
+        </div>
+        <p class="err" id="medErr" role="alert" hidden>Escolha o ambiente e preencha altura e largura.</p>
+
+        <div class="calc-nav">
+          <button type="button" class="key key-fn" id="medLimpar"><i>C</i><span>Limpar</span></button>
+          <button type="button" class="key key-eq" id="medAdd"><span>Adicionar ao orçamento</span></button>
+        </div>
+
+        <a class="key key-eq med-wa" id="medWa" href="#" target="_blank" rel="noopener" hidden>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.1-.7.2-.8 1-.9 1.1-.3.2-.6.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.6l.5-.6.3-.5v-.5l-.9-2.2c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4A3.5 3.5 0 0 0 5.9 9c0 1.5 1.1 3 1.2 3.2a12 12 0 0 0 4.7 4.1c.7.3 1.2.5 1.6.6a3.9 3.9 0 0 0 1.8.1 3 3 0 0 0 2-1.4 2.4 2.4 0 0 0 .2-1.4zM12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/></svg>
+          <span>Enviar meu orçamento</span>
+        </a>
+        <p class="sim-micro">Estimativa por metro quadrado de frente do móvel. O valor final é fechado depois da medição técnica, sem custo.</p>
       </div>
 
       <div class="calc-panel" id="panelPdf" role="tabpanel" aria-labelledby="tabPdf" hidden>

@@ -174,6 +174,117 @@
     });
   });
 
+  /* =========================================================
+     calculadora por medidas
+     preço por metro quadrado de FRENTE do móvel: altura x largura.
+     a profundidade é registrada e vai junto no orçamento, mas não
+     entra na conta. Para mudar o preço, mexa só na linha abaixo.
+     ========================================================= */
+  var M2_PRECO = 2950;
+
+  var medAmb = document.getElementById('medAmbientes');
+  if (medAmb) {
+    var medA = document.getElementById('medA');
+    var medL = document.getElementById('medL');
+    var medP = document.getElementById('medP');
+    var medErr = document.getElementById('medErr');
+    var medLista = document.getElementById('medLista');
+    var medTotal = document.getElementById('medTotal');
+    var medQtd = document.getElementById('medQtd');
+    var medWa = document.getElementById('medWa');
+    var itens = [];
+    var ambSel = '';
+
+    var brl = function (v) {
+      return 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+    };
+    var num = function (el) {
+      var v = parseFloat(String(el.value).replace(/\./g, '').replace(',', '.'));
+      return isNaN(v) ? 0 : v;
+    };
+    var m = function (v) {
+      return v.toFixed(2).replace('.', ',');
+    };
+
+    medAmb.addEventListener('click', function (e) {
+      var tecla = e.target.closest('.key');
+      if (!tecla) return;
+      Array.prototype.forEach.call(medAmb.querySelectorAll('.key'), function (c) { c.classList.remove('is-sel'); });
+      tecla.classList.add('is-sel');
+      ambSel = tecla.dataset.v;
+      medErr.hidden = true;
+      if (!medP.value) medP.value = ambSel === 'Banheiro' ? '0,45' : '0,60';
+      medA.focus();
+    });
+
+    function pintar() {
+      var total = 0, html = '';
+      itens.forEach(function (it, i) {
+        total += it.valor;
+        html += '<li>' +
+          '<span class="med-nome">' + it.amb + '</span>' +
+          '<span class="med-med">' + m(it.a) + ' x ' + m(it.l) + ' m</span>' +
+          '<span class="med-sub">' + brl(it.valor) + '</span>' +
+          '<button type="button" data-i="' + i + '" aria-label="Remover ' + it.amb + '">&times;</button>' +
+          '</li>';
+      });
+      medLista.innerHTML = html;
+      medTotal.textContent = brl(total);
+      medQtd.textContent = itens.length === 0 ? 'Nenhum ambiente'
+        : itens.length + (itens.length === 1 ? ' ambiente' : ' ambientes');
+      medWa.hidden = itens.length === 0;
+
+      if (itens.length) {
+        var linhas = ['Olá! Fiz o cálculo pelas medidas no site da Easy Home.'];
+        itens.forEach(function (it) {
+          linhas.push(it.amb + ': ' + m(it.a) + ' x ' + m(it.l) +
+            (it.p ? ' x ' + m(it.p) : '') + ' m = ' + brl(it.valor));
+        });
+        linhas.push('Estimativa total: ' + brl(total));
+        linhas.push('Gostaria de confirmar o valor com vocês.');
+        medWa.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(linhas.join('\n'));
+      }
+    }
+
+    medLista.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-i]');
+      if (!b) return;
+      itens.splice(Number(b.dataset.i), 1);
+      pintar();
+    });
+
+    document.getElementById('medAdd').addEventListener('click', function () {
+      var a = num(medA), l = num(medL), p = num(medP);
+      if (!ambSel || a <= 0 || l <= 0) {
+        medErr.hidden = false;
+        return;
+      }
+      medErr.hidden = true;
+      itens.push({ amb: ambSel, a: a, l: l, p: p, valor: a * l * M2_PRECO });
+      pintar();
+      track('CalculouMedidas');
+      medA.value = ''; medL.value = ''; medP.value = '';
+      Array.prototype.forEach.call(medAmb.querySelectorAll('.key'), function (c) { c.classList.remove('is-sel'); });
+      ambSel = '';
+      document.getElementById('medTotal').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    });
+
+    document.getElementById('medLimpar').addEventListener('click', function () {
+      itens = []; ambSel = '';
+      medA.value = ''; medL.value = ''; medP.value = '';
+      medErr.hidden = true;
+      Array.prototype.forEach.call(medAmb.querySelectorAll('.key'), function (c) { c.classList.remove('is-sel'); });
+      pintar();
+    });
+
+    medWa.addEventListener('click', function () {
+      if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: 'calculadora de medidas' });
+      if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { origem: 'calculadora de medidas' });
+    });
+
+    pintar();
+  }
+
   /* abas da calculadora */
   var tabs = document.querySelectorAll('.calc-tab');
   Array.prototype.forEach.call(tabs, function (tab) {
