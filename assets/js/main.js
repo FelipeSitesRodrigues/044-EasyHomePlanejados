@@ -9,32 +9,56 @@
   var ano = document.getElementById('ano');
   if (ano) ano.textContent = new Date().getFullYear();
 
-  /* ---------- menu mobile ---------- */
+  /* ---------- menu recolhido ---------- */
+  var hd = document.querySelector('.hd');
   var burger = document.getElementById('burger');
   var nav = document.getElementById('nav');
-  if (burger && nav) {
-    burger.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      burger.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-    });
+  if (hd && burger && nav) {
+    var abrirMenu = function (sim) {
+      nav.classList.toggle('is-open', sim);
+      hd.classList.toggle('is-open', sim);
+      burger.setAttribute('aria-expanded', sim ? 'true' : 'false');
+      burger.setAttribute('aria-label', sim ? 'Fechar menu' : 'Abrir menu');
+    };
+    burger.addEventListener('click', function () { abrirMenu(!nav.classList.contains('is-open')); });
     nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        nav.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
+      if (e.target.tagName === 'A') abrirMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+        abrirMenu(false);
+        burger.focus();
       }
+    });
+    document.addEventListener('click', function (e) {
+      if (nav.classList.contains('is-open') && !hd.contains(e.target)) abrirMenu(false);
     });
   }
 
-  /* ---------- header encolhe ao rolar ---------- */
-  var hd = document.querySelector('.hd');
-  if (hd && 'IntersectionObserver' in window) {
-    var sentinel = document.createElement('div');
-    sentinel.style.cssText = 'position:absolute;top:0;height:1px;width:1px;pointer-events:none';
-    document.body.prepend(sentinel);
+  /* ---------- pílula escurece quando o banner sai de baixo dela ---------- */
+  var hero = document.querySelector('.hero');
+  if (hd && hero && 'IntersectionObserver' in window) {
     new IntersectionObserver(function (e) {
       hd.classList.toggle('is-stuck', !e[0].isIntersecting);
-    }, { threshold: 0 }).observe(sentinel);
+    }, { rootMargin: '-74px 0px 0px 0px' }).observe(hero);
+  } else if (hd) {
+    hd.classList.add('is-stuck');
+  }
+
+  /* ---------- item do menu da seção que está no meio da tela ---------- */
+  if (nav && 'IntersectionObserver' in window) {
+    var navLinks = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+    var navIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        navLinks.forEach(function (a) {
+          if (a.getAttribute('href') === '#' + en.target.id) a.classList.toggle('is-on', en.isIntersecting);
+        });
+      });
+    }, { rootMargin: '-45% 0px -54% 0px' });
+    navLinks.forEach(function (a) {
+      var alvo = document.querySelector(a.getAttribute('href'));
+      if (alvo) navIo.observe(alvo);
+    });
   }
 
   /* ---------- reveal ---------- */
@@ -65,16 +89,21 @@
 
   /* ---------- carrossel de projetos ---------- */
   /* fita contínua: duplica os cards uma vez para o loop fechar sem salto */
-  var track = document.getElementById('projTrack');
-  if (track && !reduce) {
-    var originais = Array.prototype.slice.call(track.children);
+  var projTrack = document.getElementById('projTrack');
+  if (projTrack && !reduce) {
+    var originais = Array.prototype.slice.call(projTrack.children);
     originais.forEach(function (fig) {
       var c = fig.cloneNode(true);
       c.setAttribute('aria-hidden', 'true');
       Array.prototype.forEach.call(c.querySelectorAll('img'), function (im) { im.setAttribute('alt', ''); });
-      track.appendChild(c);
+      projTrack.appendChild(c);
     });
   }
+
+  /* ---------- botões dos planos ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-plano]'), function (a) {
+    a.addEventListener('click', function () { track('OrcamentoPlano', { plano: a.dataset.plano }); });
+  });
 
   /* ---------- simulador ---------- */
   var form = document.getElementById('simForm');
