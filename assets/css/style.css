@@ -210,17 +210,15 @@ section{padding-block:clamp(56px,7vw,92px)}
 /* =========================================================
    2. HERO
    ========================================================= */
+/* preto e dourado só aqui, na chamada do 18x: pedido do Marcelo, no padrão da Yas Móveis */
 .hero{
-  position:relative;background:var(--ink);color:#fff;
+  --h-preto:#0C0D12;
+  --h-ouro:#C49A3C;
+  --h-ouro-grad:linear-gradient(180deg,#F0D58F 0%,#C49A3C 58%,#A4741F 100%);
+  position:relative;background:var(--h-preto);color:#fff;
   display:grid;grid-template-columns:1.06fr .94fr;align-items:center;
   gap:0;padding:0;min-height:min(754px,100vh);
   isolation:isolate;overflow:hidden;
-}
-/* o brilho passa POR CIMA da foto, senão a divisa entre as duas colunas
-   fica visível: glow de um lado, foto sem glow do outro */
-.hero::after{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(74% 86% at 20% 92%,rgba(15,98,230,.30),transparent 70%);
 }
 .hero-media{
   position:relative;z-index:0;align-self:stretch;
@@ -231,26 +229,54 @@ section{padding-block:clamp(56px,7vw,92px)}
 .hero-media::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,
-    var(--ink) 0%,var(--ink) 26%,
-    rgba(5,12,27,.88) 40%,rgba(5,12,27,.45) 56%,
-    rgba(5,12,27,.12) 72%,transparent 84%);
+    var(--h-preto) 0%,var(--h-preto) 26%,
+    rgba(12,13,18,.88) 40%,rgba(12,13,18,.45) 56%,
+    rgba(12,13,18,.12) 72%,transparent 84%);
 }
 /* o padding-left cresce com a tela, então o limite de leitura vai nos filhos,
    nunca no bloco: senão em telas largas o texto é espremido contra o padding */
 .hero-copy{
   grid-row:1;grid-column:1;position:relative;z-index:2;
-  padding:calc(clamp(48px,6vw,76px) + 74px) clamp(18px,2vw,30px) clamp(48px,6vw,76px) max(22px,calc((100vw - 1240px)/2 + 22px));
+  padding:calc(clamp(32px,4vw,48px) + 74px) clamp(18px,2vw,30px) clamp(40px,5vw,60px) max(22px,calc((100vw - 1240px)/2 + 22px));
   max-width:none;
 }
 .hero-copy>*{max-width:580px}
-.hero h1{margin-bottom:0;font-size:clamp(2rem,3.5vw,3.3rem)}
-.hero-sub{color:#C3D3E6;font-size:1.06rem;max-width:46ch;margin-bottom:26px}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.hero-micro{font-size:.85rem;color:#8FA5BE;margin-bottom:22px}
-.hero-micro i{font-style:normal;color:var(--blue-lit);padding-inline:4px}
-.hero-chips{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.hero-chips-lb{font-size:.85rem;color:#A9BDD4;font-weight:600;margin-right:2px}
-.hero-chips .chip{padding:8px 14px;font-size:.84rem}
+.hero-marca{display:flex;align-items:flex-end;gap:10px;font-family:Sora,sans-serif;line-height:1}
+.hero-marca b,.hero-anos,.hero-linha b{
+  background-image:var(--h-ouro-grad);-webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+}
+.hero-marca b{font-size:clamp(3.6rem,6.4vw,5.6rem);font-weight:800;letter-spacing:-.05em}
+.hero-anos{font-size:clamp(1.1rem,1.8vw,1.55rem);font-weight:600;padding-bottom:.42em}
+.hero-nome{
+  margin-left:8px;padding:0 0 .3em 18px;border-left:1px solid rgba(196,154,60,.55);
+  font-size:clamp(1.35rem,2.5vw,2.15rem);font-weight:800;letter-spacing:-.02em;text-transform:uppercase;
+}
+.hero-nome i{display:block;margin-top:5px;font-style:normal;font-family:Inter,sans-serif;font-size:.52em;font-weight:500;letter-spacing:.02em;text-transform:none;color:#E7E2D6}
+.hero-chamada{
+  margin-top:clamp(20px,2.6vw,30px);color:var(--h-ouro);
+  font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:.86rem;letter-spacing:.2em;text-transform:uppercase;
+}
+.hero-fio{width:76px;height:2px;margin:12px 0 clamp(16px,2vw,22px);background:var(--h-ouro)}
+.hero h1{margin:0;font-size:clamp(1.5rem,2.3vw,2.05rem);letter-spacing:.01em;line-height:1}
+.hero-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.hero-em{display:block;margin-bottom:4px}
+.hero-linha{display:flex;align-items:baseline;gap:.34em;white-space:nowrap;font-size:clamp(1.9rem,3vw,2.75rem)}
+.hero-linha b{font-size:clamp(5rem,9.2vw,8.2rem);font-weight:800;letter-spacing:-.05em;line-height:.98;padding-right:.04em}
+.hero-box{
+  margin-top:clamp(14px,1.6vw,20px);padding:12px 20px;width:fit-content;
+  border:1px solid var(--h-ouro);border-radius:4px;background:rgba(255,255,255,.07);
+  font-family:Sora,sans-serif;font-weight:700;font-size:clamp(.92rem,1.4vw,1.15rem);letter-spacing:.05em;text-transform:uppercase;
+}
+.hero-box i{font-style:normal;font-weight:500;color:var(--h-ouro);text-transform:lowercase;padding-inline:3px}
+.hero-btn{
+  margin-top:clamp(14px,1.6vw,18px);border-radius:4px;color:#1A1205;
+  font-family:Sora,sans-serif;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  background:linear-gradient(180deg,#E3C271 0%,var(--h-ouro) 60%,#A4741F 100%);border-color:rgba(255,255,255,.22);
+  box-shadow:0 12px 28px rgba(164,116,31,.28);
+}
+.hero-btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(164,116,31,.42)}
+.hero-cond{margin-top:10px;font-size:.82rem;color:#A9A69D}
 
 /* =========================================================
    3. SELOS
@@ -266,9 +292,6 @@ section{padding-block:clamp(56px,7vw,92px)}
 .selo b{font-size:.94rem;color:#12203A}
 .selo span{font-size:.83rem;color:var(--steel)}
 
-.hero-aster{text-decoration:none;color:var(--blue-glow);font-size:.55em;vertical-align:super;line-height:0}
-.hero-mdf{font-size:.84rem;line-height:1.45;color:#CFDDEC;margin-top:14px}
-.hero-mdf b{color:#fff;font-weight:600}
 
 /* =========================================================
    4. PLANOS
@@ -899,32 +922,31 @@ section{padding-block:clamp(56px,7vw,92px)}
   .hd-cta-b::first-letter{text-transform:uppercase}
   .proc-list{grid-template-columns:repeat(2,1fr)}
 
-  /* hero mobile: headline, imagem, subheadline, botoes, chips */
+  /* hero mobile: marca, chamada do 18x, imagem, condição, botão */
   .hero{
     display:grid;grid-template-columns:minmax(0,1fr);min-height:0;
-    padding:100px 22px 38px;overflow:hidden;
-    grid-template-areas:"eyebrow" "h1" "mdf" "strip" "media" "sub" "btns" "micro" "chips";
+    padding:92px 22px 34px;overflow:hidden;
+    grid-template-areas:"marca" "chamada" "fio" "h1" "media" "box" "btn" "cond";
   }
   .hero-copy{display:contents}
-  .hero .eyebrow{grid-area:eyebrow;margin-bottom:10px}
-  .hero h1{grid-area:h1;font-size:clamp(1.9rem,7.4vw,2.5rem)}
-  .hero-mdf{grid-area:mdf;margin-top:10px}
-  .hero .lightstrip{grid-area:strip;margin:14px 0 0}
+  .hero-marca{grid-area:marca}
+  .hero-chamada{grid-area:chamada;font-size:.76rem;letter-spacing:.16em}
+  .hero-fio{grid-area:fio}
+  .hero h1{grid-area:h1}
   .hero-media{
     grid-area:media;position:relative;z-index:0;
-    margin:20px -22px 22px;height:auto;border-radius:0;align-self:auto;
+    margin:20px -22px 0;height:auto;border-radius:0;align-self:auto;
   }
-  .hero::after{background:radial-gradient(90% 50% at 50% 100%,rgba(15,98,230,.28),transparent 72%)}
   .hero-media img{aspect-ratio:16/10;height:auto;object-position:center}
   .hero-media::after{
-    background:linear-gradient(0deg,rgba(5,12,27,.75) 0%,transparent 42%),
-               linear-gradient(90deg,rgba(5,12,27,.5),transparent 34%);
+    background:linear-gradient(0deg,rgba(12,13,18,.9) 0%,transparent 34%),
+               linear-gradient(180deg,rgba(12,13,18,.75) 0%,transparent 26%);
   }
-  .hero-sub{grid-area:sub;margin-bottom:20px;font-size:1rem}
-  .hero-btns{grid-area:btns;flex-direction:column;align-items:stretch}
-  .hero-btns .btn{width:100%}
-  .hero-micro{grid-area:micro;margin-bottom:18px}
-  .hero-chips{grid-area:chips}
+  .hero-box{grid-area:box;width:auto;margin-top:18px;padding-inline:10px;text-align:center;font-size:clamp(.78rem,3.6vw,.92rem);letter-spacing:.02em}
+  .hero-btn{grid-area:btn;width:100%;padding-inline:12px;font-size:clamp(.78rem,3.7vw,1rem)}
+  .hero-cond{grid-area:cond;text-align:center}
+  .hero-linha b{font-size:clamp(3.6rem,23vw,6rem)}
+  .hero-linha{font-size:clamp(1.3rem,7.2vw,2.2rem)}
 
   .selos{padding-block:22px}
   .selos-grid{grid-template-columns:1fr 1fr;gap:16px}
