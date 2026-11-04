@@ -174,7 +174,7 @@ section{padding-block:clamp(56px,7vw,92px)}
   display:flex;align-items:center;gap:12px;
   width:min(100%,1000px);height:62px;padding:0 8px 0 18px;
   border-radius:999px;pointer-events:auto;
-  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.05)),rgba(5,12,27,.42);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 1px 0 rgba(255,255,255,.34),0 18px 40px -18px rgba(2,8,30,.7);
   -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
 }
@@ -224,14 +224,13 @@ section{padding-block:clamp(56px,7vw,92px)}
   position:relative;z-index:0;align-self:stretch;
   margin-left:-220px;margin-right:0;
 }
-.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center right}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:70% center}
 /* a fusão acontece dentro da própria foto, bem longe da borda da coluna */
 .hero-media::after{
   content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,
-    var(--h-preto) 0%,var(--h-preto) 26%,
-    rgba(12,13,18,.88) 40%,rgba(12,13,18,.45) 56%,
-    rgba(12,13,18,.12) 72%,transparent 84%);
+    var(--h-preto) 0%,var(--h-preto) 9%,rgba(12,13,18,.7) 17%,
+    rgba(12,13,18,.25) 27%,transparent 36%);
 }
 /* o padding-left cresce com a tela, então o limite de leitura vai nos filhos,
    nunca no bloco: senão em telas largas o texto é espremido contra o padding */
@@ -935,8 +934,8 @@ section{padding-block:clamp(56px,7vw,92px)}
   }
   .hero-media img{aspect-ratio:16/10;height:auto;object-position:center}
   .hero-media::after{
-    background:linear-gradient(0deg,rgba(12,13,18,.9) 0%,transparent 34%),
-               linear-gradient(180deg,rgba(12,13,18,.75) 0%,transparent 26%);
+    background:linear-gradient(0deg,rgba(12,13,18,.7) 0%,transparent 16%),
+               linear-gradient(180deg,rgba(12,13,18,.6) 0%,transparent 14%);
   }
   .hero-box{grid-area:box;width:auto;margin-top:18px;padding-inline:10px;text-align:center;font-size:clamp(.78rem,3.6vw,.92rem);letter-spacing:.02em}
   .hero-btn{grid-area:btn;width:100%;padding-inline:12px;font-size:clamp(.78rem,3.7vw,1rem)}
@@ -1011,4 +1010,38 @@ section{padding-block:clamp(56px,7vw,92px)}
     transition-duration:.01ms!important;
   }
   .reveal{opacity:1;transform:none}
+}
+
+/* Black November, campanha de 01/11 a 30/11. O dourado do 50% vem da arte do Marcelo */
+.black{background:var(--ink);color:#fff;padding-block:30px;border-block:1px solid rgba(46,144,255,.28)}
+.black-in{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:clamp(20px,3vw,44px)}
+.black-periodo{font-family:"Space Grotesk",sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-glow)}
+.black h2{margin:5px 0 4px;color:#fff;font-family:Sora,sans-serif;font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:800;letter-spacing:-.02em;line-height:1.05;text-transform:uppercase;white-space:nowrap}
+.black h2 em{font-style:normal;color:var(--blue-lit)}
+.black-sub{font-size:.92rem;line-height:1.35;color:var(--silver-hi)}
+.black-tags{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,1.2fr);align-items:center;gap:10px;margin:0;padding:0;list-style:none}
+.black-tags li{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:74px;padding:6px 4px;
+  border:1.5px solid var(--blue-lit);border-radius:12px;background:linear-gradient(180deg,#0D2A5C,#08172F);
+  font-family:Sora,sans-serif;line-height:1.05;
+}
+.black-tags b{font-size:clamp(1.15rem,1.7vw,1.5rem);font-weight:800;letter-spacing:-.02em}
+.black-tags span{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.black-tags i{font-style:normal;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.black-tags .is-max{min-height:88px;border-color:#E3C271;background:linear-gradient(180deg,#2A2010,#120E08);color:#F0D58F}
+.black-tags .is-max b{font-size:clamp(1.45rem,2.2vw,1.9rem)}
+.black-acao{text-align:center}
+.black-acao .btn{white-space:nowrap}
+.black-acao p{margin-top:7px;font-size:.78rem;color:var(--silver)}
+@media (max-width:1180px){
+  .black-in{grid-template-columns:minmax(0,1fr) auto}
+  .black-tags{grid-column:1/-1;grid-row:2}
+}
+@media (max-width:640px){
+  .black{padding-block:26px}
+  .black-in{grid-template-columns:minmax(0,1fr);gap:16px}
+  .black-tags{grid-column:auto;grid-row:auto;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .black-tags li{min-height:62px}
+  .black-tags .is-max{grid-column:1/-1;flex-direction:row;gap:7px;min-height:58px}
+  .black-acao .btn{width:100%}
 }
