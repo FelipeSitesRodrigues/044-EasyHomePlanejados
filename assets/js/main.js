@@ -209,7 +209,7 @@
      a profundidade é registrada e vai junto no orçamento, mas não
      entra na conta. Para mudar o preço, mexa só na linha abaixo.
      ========================================================= */
-  var M2_PRECO = 2490;
+  var M2_PRECO = 2950;
 
   var medAmb = document.getElementById('medAmbientes');
   if (medAmb) {
