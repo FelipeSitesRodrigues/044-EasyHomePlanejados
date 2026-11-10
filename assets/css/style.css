@@ -1048,6 +1048,8 @@ section{padding-block:clamp(56px,7vw,92px)}
   display:flex;align-items:center;gap:10px;padding:8px 16px;border:1.5px solid #E3C271;border-radius:999px;
   font-style:italic;font-size:.9rem;font-weight:800;white-space:nowrap;
 }
+.black-12x{color:#fff;text-decoration:none;transition:background-color .2s,transform .2s var(--ease)}
+.black-12x:hover{background:rgba(196,154,60,.16);transform:translateY(-2px)}
 .black-12x svg{width:26px;height:26px;flex:none;fill:none;stroke:#F6D56B;stroke-width:1.6;stroke-linecap:round}
 .black-12x b{font-size:1.45rem;font-weight:900;color:#F6D56B}
 .black-12x i{color:#F6D56B}
